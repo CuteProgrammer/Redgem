@@ -1,0 +1,5 @@
+<?
+	
+	$env=array('development','production');
+
+?>
