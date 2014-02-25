@@ -27,13 +27,13 @@ class Core {
 		//nothing in here yet
 	}
 
-	public function restrict ($checkfor) {
+	public function session ($checkfor) {
 		require_once('../library/class.Router.php');
 		$router=new Router(CURRENT_ENVIRONMENT);
 		session_start();
-		if(isset($session_check)){
+		if(isset($checkfor)){
 
-		 if($session_check=='A') { 
+		 if($checkfor=='permissions.get') { 
 
 			if(isset($_SESSION[DEFAULT_SESSION_ID_INDICE])) { 
 				$user_id=$_SESSION[DEFAULT_SESSION_ID_INDICE]; //The main session id pulled by the user
@@ -43,7 +43,7 @@ class Core {
 		 }
 
 
-		 if($session_check=='B') { 
+		 if($checkfor=='restrict.session') { 
 
 			if(isset($_SESSION[DEFAULT_SESSION_ID_INDICE])) {
 				$user_id=$_SESSION['user_id'];
@@ -54,7 +54,7 @@ class Core {
 			}
 			
 			
-		}elseif($session_check=='C') { 
+		}elseif($checkfor=='passed.session') { 
 
 
 				if(isset($_SESSION[DEFAULT_SESSION_ID_INDICE])) { 
@@ -157,9 +157,11 @@ class Core {
 	<?if(!empty($stylesheet)){foreach($stylesheet as $value){
 	?>
 	<link rel="stylesheet" href="<?echo ROOT;?>/template/css/<?echo $value; ?>" type="text/css"/>
-	<?}} ?>
+	<?
+			include'../includes/root/html_header.r';
+	}} ?>
 		<?
-			include'../includes/root/meta.r';
+			include'../includes/root/html_meta.r';
 		?>
 	<title> <?=$title;?> | <?=SITE_TITLE;?></title>
 	</head>
