@@ -183,7 +183,7 @@ class Core {
 }
 
 
-	public function TemplateEnd ($template) {
+	public function templateEnd ($template) {
 
 		if($template=="basic"){
 			?>
