@@ -27,7 +27,7 @@ class Core {
 		//nothing in here yet
 	}
 
-	public function session ($checkfor) {
+	public function session_lock ($checkfor) {
 		require_once('../library/class.Router.php');
 		$router=new Router(CURRENT_ENVIRONMENT);
 		session_start();
