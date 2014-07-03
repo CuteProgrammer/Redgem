@@ -1,7 +1,7 @@
 <?
 /*
 # Core.php
-# All frameworks and settings for the Powerhouse Framework
+# All frameworks and settings for the Redgem Framework
 # VERSION 1.5 (c) 2013 Bennett Gibson
 */
 
@@ -71,28 +71,6 @@ class Core {
 		?>
 		<img src="<?echo $url;?>" style="<?echo $style;?>"/>
 		<?
-
-	}
-
-	public function sendEmail ($to,$subject,$content){
-	$to = $to;
-	$subject = $subject;
-	$message = '<html><body>
-					<div style="">
-					'.$content.'
-					</div>
-	</body></html>';
-	$headers = "From: " . DEFAULT_EMAIL_FROM . "\r\n";
-	$headers .= "Reply-To: " .DEFAULT_EMAIL_FROM ."\r\n";
-	$headers .= "CC: m\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-		if(mail($to,$subject,$message,$headers)){
-			return true;
-		}else{
-			return false;
-		}
 
 	}
 
