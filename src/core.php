@@ -8,6 +8,7 @@
 #------------------------------------------------------
 
 require_once'includes/config.inc.php';
+require_once'includes/root/functions.r';
 
 # Session Check 
 
@@ -124,60 +125,20 @@ class Core {
 	<?
 	}
 
-	public function templateStart ($template,$title,$stylesheet) {
+		//Eventually we want to use MVC style routing with templates that can simply accept data into the middle of them, 
+		//that way we won't have to define both a start and an end layout.
+	public function templateStart ($layout_name,$title) {
+		if($layout_name!==""){
+			fetchLayout($layout_name,$title);	
+		}else{
+			echo'You did not select a layout.';
+		}
 
-		if($template=="basic") {
-	?>
-
-	<!DOCTYPE html>
-	<html>
-	<head>
-	<?if(!empty($stylesheet)){foreach($stylesheet as $value){
-	?>
-	<link rel="stylesheet" href="<?echo ROOT;?>/template/css/<?echo $value; ?>" type="text/css"/>
-	<?
-			include'../includes/root/html_header.r';
-	}} ?>
-		<?
-			include'../includes/root/html_meta.r';
-		?>
-	<title> <?=$title;?> | <?=SITE_TITLE;?></title>
-	</head>
-	<body>
-		<header>
-			<div id="wrapper">
-			<?
-			require_once 'template/header.php';
-			?>
-			</div>
-		</header>
-	<content>
-	<div id="wrapper">
-	<?
-	}else{
-	echo'You did not select a template.';
 	}
 
-}
 
-
-	public function templateEnd ($template) {
-
-		if($template=="basic"){
-			?>
-			</div>
-			</content>
-				<footer>
-					<div id="wrapper">
-					<?	
-					include 'template/footer.php';
-					?>
-					</div>
-				</footer>
-			</body>
-			</html>
-			<?
-		}
+	public function templateEnd ($layout_name) {
+		fetchLayout($layout_name);
 
 	}
 
