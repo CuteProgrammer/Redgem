@@ -2,7 +2,7 @@
 /*
 # Core.php
 # All frameworks and settings for the Redgem Framework
-# VERSION 1.5 (c) 2013 Bennett Gibson
+# VERSION 1.6 (c) 2013 Bennett Gibson
 */
 
 #------------------------------------------------------
@@ -108,12 +108,6 @@ class Core {
 
 	}
 
-
-	public function import ($name){
-		include_once('library/'.$name.'.php');
-	}
-	
-	
 	public function redirect ($where) {
 		$path=$this->env_path;
 		header("Location:".$path.$where);
@@ -125,11 +119,10 @@ class Core {
 	<?
 	}
 
-		//Eventually we want to use MVC style routing with templates that can simply accept data into the middle of them, 
-		//that way we won't have to define both a start and an end layout.
+	//Use templateStart to pull in a layout by name, use layout end to pull in an ending layout
 	public function templateStart ($layout_name,$title) {
 		if($layout_name!==""){
-			fetchLayout($layout_name,$title);	
+			fetchLayoutEnd($layout_name,$title);	
 		}else{
 			echo'You did not select a layout.';
 		}
@@ -138,7 +131,7 @@ class Core {
 
 
 	public function templateEnd ($layout_name) {
-		fetchLayout($layout_name);
+		fetchLayoutEnd($layout_name);
 
 	}
 

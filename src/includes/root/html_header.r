@@ -1,1 +1,0 @@
-<link rel="stylesheet" href="<?echo ROOT;?>/template/css/template.css" type="text/css"/>
