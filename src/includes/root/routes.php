@@ -1,6 +1,6 @@
 <?
 	
-	$rou=array(
+	$route=array(
 		'dev'=>array('path'=>'dev.'),
 		'live'=>array('path'=>''),
 		'forcelogin'=>array('path'=>'login?m=mustlogin'),

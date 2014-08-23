@@ -1,10 +1,8 @@
 	</div>
 	</content>
 		<footer>
-			<div id="wrapper">
-			<?	
-			include 'template/footer.php';
-			?>
+			<div class="wrapper">
+
 			</div>
 		</footer>
 	</body>

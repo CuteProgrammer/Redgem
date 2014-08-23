@@ -1,4 +1,5 @@
 <?
+
 /*
 # Core.php
 # All frameworks and settings for the Redgem Framework
@@ -8,7 +9,9 @@
 #------------------------------------------------------
 
 require_once'includes/config.inc.php';
-require_once'includes/root/functions.r';
+require_once'includes/root/functions.php';
+include_once'includes/root/routes.php';
+include_once'includes/root/defines.php';
 
 # Session Check 
 
@@ -24,115 +27,90 @@ require_once'includes/root/functions.r';
 
 class Core {
 
-	function __construct (){
-		//nothing in here yet
+	public function CoreSL ($session_checking,$layout_name,$title){
+		self::session_lock($session_checking);
+		self::templateStart($layout_name,$title);
 	}
-
-	public function session_lock ($checkfor) {
-		require_once('../library/class.Router.php');
-		$router=new Router(CURRENT_ENVIRONMENT);
+	
+	public static function session_lock ($check) {
 		session_start();
-		if(isset($checkfor)){
-
-		 if($checkfor=='permissions.get') { 
-
-			if(isset($_SESSION[DEFAULT_SESSION_ID_INDICE])) { 
-				$user_id=$_SESSION[DEFAULT_SESSION_ID_INDICE]; //The main session id pulled by the user
-				$session_started=True;
-			}
-
-		 }
-
-
-		 if($checkfor=='restrict.session') { 
-
-			if(isset($_SESSION[DEFAULT_SESSION_ID_INDICE])) {
-				$user_id=$_SESSION['user_id'];
-				$session_started=True;
-
-			}else{
-				$router->sdirect('forcelogin');
-			}
+		
+		switch($check){
 			
-			
-		}elseif($checkfor=='passed.session') { 
-
-
-				if(isset($_SESSION[DEFAULT_SESSION_ID_INDICE])) { 
-			
-					$router->sdirect('loggedin');
+			case("FDL"):
+				if(!$_SESSION[DEFAULT_SID_INDEX]){
+					redirect_t($route['forcelogin']);
 				}
-				
+			break;
+			case("TGP"):
+				if($_SESSION[DEFAULT_SID_INDEX]){
+					$user_id  = $_SESSION[DEFAULT_SID_INDEX];
+				}
+			break;
+			case("TDA"):
+				if($_SESSION[DEFAULT_SID_INDEX]){
+					redirect_t($route['loggedin']);
+				}
+			break;
 		}
 	
 	}
 	
-	function img ($url,$style){
-
-		?>
-		<img src="<?echo $url;?>" style="<?echo $style;?>"/>
-		<?
-
-	}
-
-	
-	function sLink ($url,$text) {
-		?>
-		<a href="<?echo ROOT."/".$url;?>"><?echo $text;?></a>
-		<?
-	}
-
-	function aLink ($url,$text) {
-		?>
-		<a href="<?echo $url;?>"><?echo $text;?></a>
-		<?
-	}
-
-	function error ($what) {
-
-		echo '<div class="error">'.$what.'</div>';
-
-	}
-
-
-	function warning ($what) {
-
-		echo '<div class="warning">'.$what.'</div>';
-
-	}
-
-
-	function success ($what) {
-
-		echo '<div class="success">'.$what.'</div>';
-
-	}
-
-	public function redirect ($where) {
-		$path=$this->env_path;
-		header("Location:".$path.$where);
+	private static function __fetchLayoutStart($layout,$title) {
+		$this_title=$title;
+		include_once('template/layouts/'.$layout.'_start.layout.php');
 	}
 	
-	public function redirect_slow ($where,$time){
-	?>
-		<meta http-equiv="refresh" content="<?echo $time;?>;url='<?echo $where;?>' "/>
-	<?
+	private static function __fetchLayoutEnd($layout) {
+		include_once('template/layouts/'.$layout.'_end.layout.php');
 	}
 
 	//Use templateStart to pull in a layout by name, use layout end to pull in an ending layout
-	public function templateStart ($layout_name,$title) {
-		if($layout_name!==""){
-			fetchLayoutEnd($layout_name,$title);	
+	public static function templateStart ($layout_name,$title) {
+		if($layout_name){
+			self::__fetchLayoutStart($layout_name,$title);	
 		}else{
 			echo'You did not select a layout.';
 		}
+	}
 
+	public static function hasPermissions($permission) {
+		switch($permission){
+			case("admin"):
+				session_start();
+				if($_SESSION['user_perms']=="admin"){
+					return true;
+				}else{
+					return false;
+				}
+			break;
+			case("user"):
+				session_start();
+				if($_SESSION['user_perms']=="user"){
+					return true;
+				}else{
+					return false;
+				}
+			break;
+		}
+	}
+	
+	
+	public static function include_script ($src) {
+		echo'<script src="'.ROOT.'/scripts/'.$src.'" type="text/javascript"></script>';
+	}
+	
+	public static function include_helper ($file) {
+		include_once('includes/helpers/helper.'.$file.'.php');
+	}
+	
+	public static function import ($file) {
+		include_once('library/class.'.$file.'.php');
 	}
 
 
-	public function templateEnd ($layout_name) {
-		fetchLayoutEnd($layout_name);
-
+	public static function templateEnd ($layout_name) {
+		self::__fetchLayoutEnd($layout_name);
 	}
 
 }

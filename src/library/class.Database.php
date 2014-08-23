@@ -2,21 +2,27 @@
 
 class DatabaseCon {
     
-    private $connection;
+    private $connection = null;
     
-    function __construct ($database){
+    public function build ($database = DB_DEFAULT){
         
         $password=DB_PASSWORD;
         	$db=new mysqli("localhost",DB_USER,$password,$database);
-        	if (mysqli_connect_errno($db)) {
-          echo "Failed to connect to the Database: " . mysqli_connect_error();
+          if (mysqli_connect_errno($db)) {
+          	echo "Failed to connect to the Database: " . mysqli_connect_error();
           }else{
-          $this->connection=$db;
+          	$this->connection = $db;
           }
     }
     
-    function connect(){
+   	public function connect(){
+    	$this->build();
         return $this->connection;
+    }
+    
+    public static function get_result ($query) {
+    	$fetched = $query->fetch_array();
+    	return $fetched['value'];
     }
     
     

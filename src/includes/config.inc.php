@@ -6,26 +6,28 @@
 
 # Settings
 
-define ('SITE_TESTING',False);
+define ('DEVELOPMENT_MODE',true);
 
-	if(SITE_TESTING){
-		define ('ROOT','http://testingenv.yoursitehere.com');
+	if(DEVELOPMENT_MODE){
+		define ('ROOT','');
+		define ('IMG_DIR',ROOT.'/template/img');
 		define ('CURRENT_ENVIRONMENT','dev');
 	}else{
-		define ('ROOT','http://yoursitehere.com'); 
+		define ('ROOT','');
+		define ('IMG_DIR',ROOT.'/template/img');
 		define ('CURRENT_ENVIRONMENT','live');
 	}
 
-define ('SITE_CLOSED',false);
-
 define ('DB_HOST','localhost');
-define ('DB_USER',' not set ');
-define ('DB_PASSWORD',' not set ');
-define ('SITE_TITLE',' not set ');
-define ('DEFAULT_EMAIL_FROM', 'noreply@yoursite.com');
+define ('DB_USER','');
+define ('DB_DEFAULT','');
+define ('DB_PASSWORD','');
+define ('SITE_TITLE','');
+define ('DEFAULT_EMAIL_FROM', '');
+define ('DEFAULT_EMAIL_REPLY', '');
 
 #SESSION
 
-define ('DEFAULT_SESSION_ID_INDICE','user_id');
+define ('DEFAULT_SID_INDEX','user_id');
 
 ?>

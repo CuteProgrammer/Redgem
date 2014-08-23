@@ -1,0 +1,21 @@
+#header-container {
+margin:0 auto;
+border:1px red solid;
+padding:6px;
+}
+
+#left-side {
+width:500px;
+}
+
+#right-side {
+width:500px;
+text-align:right;
+}
+
+#right-side h1,#right-side h2,#right-side h3,#right-side h4, #right-side h5 {
+font-size:30px;
+text-shadow:1px 2px 2px black;
+}
+
+
