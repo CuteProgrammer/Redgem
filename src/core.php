@@ -27,7 +27,7 @@ include_once'includes/root/defines.php';
 
 class Core {
 
-	public function CoreSL ($session_checking,$layout_name,$title){
+	public static function CoreSL ($session_checking,$layout_name,$title){
 		self::session_lock($session_checking);
 		self::templateStart($layout_name,$title);
 	}
@@ -37,19 +37,19 @@ class Core {
 		
 		switch($check){
 			
-			case("FDL"):
-				if(!$_SESSION[DEFAULT_SID_INDEX]){
-					redirect_t($route['forcelogin']);
-				}
-			break;
-			case("TGP"):
-				if($_SESSION[DEFAULT_SID_INDEX]){
+			case(1):
+				if(isset($_SESSION[DEFAULT_SID_INDEX])){
 					$user_id  = $_SESSION[DEFAULT_SID_INDEX];
 				}
 			break;
-			case("TDA"):
-				if($_SESSION[DEFAULT_SID_INDEX]){
-					redirect_t($route['loggedin']);
+			case(2):
+				if(!isset($_SESSION[DEFAULT_SID_INDEX])){
+					redirect(ROOT.'/trylogin');
+				}
+			break;
+			case(3):
+				if(isset($_SESSION[DEFAULT_SID_INDEX])){
+					redirect(ROOT.'/');
 				}
 			break;
 		}

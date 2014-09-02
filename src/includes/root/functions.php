@@ -10,16 +10,21 @@
 	}
 
 	
-	function sLink ($url,$text) {
-		?>
-		<a href="<?echo ROOT."/".$url;?>"><?echo $text;?></a>
-		<?
+	function s_link ($url,$text,$r=null) {
+		if($r == true){
+			return '<a href="'.ROOT.'/'.$url.'">'.$text.'</a>';
+		}else{
+			echo '<a href="'.ROOT.'/'.$url.'">'.$text.'</a>';
+		}
 	}
 
-	function aLink ($url,$text) {
-		?>
-		<a href="<?echo $url;?>"><?echo $text;?></a>
-		<?
+	function a_link ($url,$text,$r=null) {
+		if($r == true){
+			return '<a href="'.$url.'">'.$text.'</a>';
+		}else{
+			echo '<a href="'.$url.'">'.$text.'</a>';
+		}
+		
 	}
 
 	function error ($what) {

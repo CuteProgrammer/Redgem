@@ -1,10 +1,11 @@
 <?
 	
 	$route=array(
-		'dev'=>array('path'=>'dev.'),
-		'live'=>array('path'=>''),
-		'forcelogin'=>array('path'=>'login?m=mustlogin'),
-		'loggedin'=>array('path'=>'account?m=welcome')
-	)
+		'dev'=>'dev.',
+		'live'=>'',
+		'forcelogin'=>'login?m=mustlogin',
+		'loggedin'=>'account?m=welcome'
+	);
+	
 
 ?>

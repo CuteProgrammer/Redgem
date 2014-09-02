@@ -4,7 +4,7 @@
 	
 		public $data;
 		
-		function Session ($session_data) {
+		function Session ($session_data=null) {
 			$this->data = $session_data;
 		}
 		
@@ -14,36 +14,23 @@
 			session_start();
 			
 			if(isset($checkfor)){
-
-				 if($checkfor=='open') { 
-
-					if(isset($_SESSION[DEFAULT_SESSION_ID_INDEX])) { 
-						$user_id=$_SESSION[DEFAULT_SESSION_ID_INDICE]; //The main session id pulled by the user
-						$session_started=True;
-					}
-
-				 }
-
-				 if($checkfor=='restrict') { 
-
-					if(isset($_SESSION[DEFAULT_SESSION_ID_INDEX])) {
-						$user_id=$_SESSION['user_id'];
-						$session_started=True;
-
-					}else{
-						$router->sdirect('forcelogin');
-					}
-	
-				}elseif($checkfor=='notforloggedin') { 
-
-
-					if(isset($_SESSION[DEFAULT_SESSION_ID_INDEX])) { 
-
-						$router->sdirect('loggedin');
-					}
-		
-				}elseif($checkfor=="none"){
-					continue;
+				switch($check){
+					
+					case(1):
+						if($_SESSION[DEFAULT_SID_INDEX]){
+							$user_id  = $_SESSION[DEFAULT_SID_INDEX];
+						}
+					break;
+					case(2):
+						if(!$_SESSION[DEFAULT_SID_INDEX]){
+							redirect_t($route['forcelogin']);
+						}
+					break;
+					case(3):
+						if($_SESSION[DEFAULT_SID_INDEX]){
+							redirect_t($route['loggedin']);
+						}
+					break;
 				}
 			}
 
@@ -58,6 +45,8 @@
 		}
 		
 		public function stop () {
+			session_start();
+				unset($_SESSION);
 			session_destroy();
 		}
 	
